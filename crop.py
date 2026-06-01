@@ -29,11 +29,21 @@ class Crop:
                 return int(self.sellPrice)
 
 
-    def get_harvests(self,seasons: int) -> int: #returns the amount of harvests in a specific period of seasons
+    def get_harvests(self,seasons: int,fertilizerLevel: int, tiller: bool) -> int: #returns the amount of harvests in a specific period of seasons
+        bonus = 0.1 if tiller == True else 0
+        match fertilizerLevel:
+            case 1:
+                bonus += 0.1
+            case 2:
+                bonus += 0.25
+            case 3:
+                bonus += 0.33
+        practicalGI = int(self.growthInterval*(1-bonus))
+
+        if practicalGI >= 28*seasons:
+            return 0
         if self.isRepeat == False:
-            return (28*seasons)//self.growthInterval
-        else:
-            return (((28*seasons)-self.growthInterval)//self.repeatInterval)+1
-
-
+            return (28*seasons-1)//practicalGI #-1 is due to crops finishing on the last day cant be harvested
+        else:    
+            return (((28*seasons-1)-practicalGI)//self.repeatInterval)+1
 
