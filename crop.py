@@ -5,15 +5,13 @@ class Crop:
         self.seedPrice = entry["seedPrice"]
         self.sellPrice = entry["sellPrice"]
         self.isRepeat = entry["isRepeat"]
-        if self.isRepeat == True:
-            self.repeatInterval = entry["repeatInterval"]
+        self.repeatInterval = entry["repeatInterval"]
         self.growthInterval = entry["growthInterval"]
         self.seasons = entry["seasons"]
         self.cropType = entry["cropType"]
         self.keg = entry["keg"]
         self.preserves = entry["preserves"]
-        if self.cropType == "fruit":
-            self.dehydrator = entry["dehydrator"]
+        self.dehydrator = entry["dehydrator"]
         self.jsonInfo = entry
 
 
@@ -29,8 +27,8 @@ class Crop:
                 return int(self.sellPrice)
 
 
-    def get_harvests(self,seasons: int,fertilizerLevel: int, tiller: bool) -> int: #returns the amount of harvests in a specific period of seasons
-        bonus = 0.1 if tiller == True else 0
+    def get_harvests(self,seasons: int,fertilizerLevel: int, agriculturist: bool) -> int: #returns the amount of harvests in a specific period of seasons
+        bonus = 0.1 if agriculturist == True else 0
         match fertilizerLevel:
             case 1:
                 bonus += 0.1
